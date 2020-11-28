@@ -1,15 +1,18 @@
-var path = require("path");
+const path = require("path");
+const app = require('express').Router();
+//const router = require("express").Router();
+// exporting html paths
+module.exports = function(app) {
+    
+    
+    app.get("/notes", function(req,res) {
+        res.sendFile(path.join(__dirname, "../public/notes.html"));
+    });
 
-module.exports = function(app, fs){
+   // set index.html as default page
+   
+   app.get("*", function(req,res) {
+       res.sendFile(path.join(__dirname, "../public/index.html"));
+     });
 
-    //Getting local host to load my index.html first
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
-});
-
-//Getting local host to send my notes.html file when called
-app.get('/notes', function(req, res) {
-    res.sendFile(path.join(__dirname, '../public/notes.html'));
-});
-
-}
+};
